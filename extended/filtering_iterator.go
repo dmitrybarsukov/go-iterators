@@ -4,16 +4,14 @@ import (
 	"iterator/commons"
 )
 
-type Predicate[T any] func(T) bool
-
 type filteringIterator[T any] struct {
 	innerIter commons.Iter[T]
-	predicate Predicate[T]
+	predicate func(T) bool
 	item      T
 	ended     bool
 }
 
-func FilteringIterator[T any](iter commons.Iter[T], predicate Predicate[T]) commons.Iter[T] {
+func FilteringIterator[T any](iter commons.Iter[T], predicate func(T) bool) commons.Iter[T] {
 	if predicate == nil {
 		panic(commons.ErrFuncIsNil)
 	}

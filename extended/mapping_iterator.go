@@ -2,14 +2,12 @@ package extended
 
 import "iterator/commons"
 
-type MappingFunc[TSrc, TRes any] func(source TSrc) TRes
-
 type mappingIterator[TSrc, TRes any] struct {
 	innerIter   commons.Iter[TSrc]
-	mappingFunc MappingFunc[TSrc, TRes]
+	mappingFunc func(TSrc) TRes
 }
 
-func MappingIterator[TSrc, TRes any](iter commons.Iter[TSrc], mappingFunc MappingFunc[TSrc, TRes]) commons.Iter[TRes] {
+func MappingIterator[TSrc, TRes any](iter commons.Iter[TSrc], mappingFunc func(TSrc) TRes) commons.Iter[TRes] {
 	if mappingFunc == nil {
 		panic(commons.ErrFuncIsNil)
 	}
