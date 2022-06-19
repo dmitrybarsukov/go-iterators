@@ -24,3 +24,4 @@ var ErrIterEnded = errIterEnded{}
 var ErrFuncIsNil = errFuncIsNil{}
 var ErrArgumentStepIsZero = errArgumentInvalid{Description: "step is zero, so iterator is infinite"}
 var ErrArgumentStepHasWrongSign = errArgumentInvalid{Description: "iterator step has wrong sign"}
+var ErrArgumentCountNegative = errArgumentInvalid{Description: "count can not be negative"}

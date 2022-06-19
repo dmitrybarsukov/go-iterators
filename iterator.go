@@ -11,20 +11,24 @@ type Iterator[T any] struct {
 	iter commons.Iter[T]
 }
 
-func OfSlice[T any](slice []T) Iterator[T] {
+func Slice[T any](slice []T) Iterator[T] {
 	return Iterator[T]{iter: basic.SliceIterator(slice)}
 }
 
-func OfMap[TK comparable, TV any](mapp map[TK]TV) Iterator[commons.KeyValue[TK, TV]] {
+func Map[TK comparable, TV any](mapp map[TK]TV) Iterator[commons.KeyValue[TK, TV]] {
 	return Iterator[commons.KeyValue[TK, TV]]{iter: basic.MapIterator(mapp)}
 }
 
-func OfIntRange(startInclusive, endExclusive, step int) commons.Iter[int] {
+func IntRange(startInclusive, endExclusive, step int) commons.Iter[int] {
 	return Iterator[int]{iter: basic.IntRangeIterator(startInclusive, endExclusive, step)}
 }
 
-func OfGenerator[T any](generateFunc func(int) T) commons.Iter[T] {
+func Generator[T any](generateFunc func(int) T) commons.Iter[T] {
 	return Iterator[T]{iter: basic.GeneratorIterator(generateFunc)}
+}
+
+func Repeat[T any](value T, count int) commons.Iter[T] {
+	return Iterator[T]{iter: basic.RepeatIterator(value, count)}
 }
 
 func (i Iterator[T]) HasNext() bool {
