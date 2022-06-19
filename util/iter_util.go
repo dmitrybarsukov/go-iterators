@@ -62,18 +62,19 @@ func CountMatching[T any](iter commons.Iter[T], predicate func(T) bool) int {
 	return result
 }
 
-func First[T any](iter commons.Iter[T]) (T, bool) {
-	if !iter.HasNext() {
-		return *new(T), false
+func First[T any](iter commons.Iter[T]) (result T, ok bool) {
+	if iter.HasNext() {
+		result = iter.Next()
+		ok = true
 	}
-	return iter.Next(), true
+	return
 }
 
-func FirstOrZeroValue[T any](iter commons.Iter[T]) T {
+func FirstOrZeroValue[T any](iter commons.Iter[T]) (result T) {
 	if item, ok := First(iter); ok {
-		return item
+		result = item
 	}
-	return *new(T)
+	return
 }
 
 func FirstOrDefault[T any](iter commons.Iter[T], def T) T {
@@ -83,21 +84,19 @@ func FirstOrDefault[T any](iter commons.Iter[T], def T) T {
 	return def
 }
 
-func Last[T any](iter commons.Iter[T]) (T, bool) {
-	var item T
-	var exist = false
+func Last[T any](iter commons.Iter[T]) (result T, ok bool) {
 	for iter.HasNext() {
-		exist = true
-		item = iter.Next()
+		ok = true
+		result = iter.Next()
 	}
-	return item, exist
+	return
 }
 
-func LastOrZeroValue[T any](iter commons.Iter[T]) T {
+func LastOrZeroValue[T any](iter commons.Iter[T]) (result T) {
 	if item, ok := Last(iter); ok {
-		return item
+		result = item
 	}
-	return *new(T)
+	return
 }
 
 func LastOrDefault[T any](iter commons.Iter[T], def T) T {
