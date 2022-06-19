@@ -87,6 +87,22 @@ func (i Iterator[T]) Filter(predicate func(T) bool) Iterator[T] {
 	return Iterator[T]{iter: extended.FilteringIterator(i.iter, predicate)}
 }
 
+func (i Iterator[T]) SortedByInt(keyFunc func(T) int) Iterator[T] {
+	return Iterator[T]{iter: extended.SortingIterator(i.iter, keyFunc, false)}
+}
+
+func (i Iterator[T]) SortedByIntDescending(keyFunc func(T) int) Iterator[T] {
+	return Iterator[T]{iter: extended.SortingIterator(i.iter, keyFunc, true)}
+}
+
+func (i Iterator[T]) SortedByString(keyFunc func(T) string) Iterator[T] {
+	return Iterator[T]{iter: extended.SortingIterator(i.iter, keyFunc, false)}
+}
+
+func (i Iterator[T]) SortedByStringDescending(keyFunc func(T) string) Iterator[T] {
+	return Iterator[T]{iter: extended.SortingIterator(i.iter, keyFunc, true)}
+}
+
 //func (i Iterator[TSrc]) MapIterator[TRes any](mappingFunc extended.MappingFunc[TSrc, TRes]) Iterator[TRes] {
 //	return &Iterator[TRes]{
 //		iter: extended.MappingIterator[TSrc, TRes](i.iter, mappingFunc),
