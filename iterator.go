@@ -23,6 +23,10 @@ func OfIntRange(startInclusive, endExclusive, step int) commons.Iter[int] {
 	return Iterator[int]{iter: basic.IntRangeIterator(startInclusive, endExclusive, step)}
 }
 
+func OfGenerator[T any](generateFunc func(int) T) commons.Iter[T] {
+	return Iterator[T]{iter: basic.GeneratorIterator(generateFunc)}
+}
+
 func (i Iterator[T]) HasNext() bool {
 	return i.iter.HasNext()
 }
