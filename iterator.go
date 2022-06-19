@@ -19,6 +19,10 @@ func OfMap[TK comparable, TV any](mapp map[TK]TV) Iterator[commons.KeyValue[TK, 
 	return Iterator[commons.KeyValue[TK, TV]]{iter: basic.MapIterator(mapp)}
 }
 
+func OfIntRange(startInclusive, endExclusive, step int) commons.Iter[int] {
+	return Iterator[int]{iter: basic.IntRangeIterator(startInclusive, endExclusive, step)}
+}
+
 func (i Iterator[T]) HasNext() bool {
 	return i.iter.HasNext()
 }
