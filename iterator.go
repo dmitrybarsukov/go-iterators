@@ -127,6 +127,10 @@ func (i Iterator[T]) SortedByFloat64Descending(keyFunc func(T) float64) Iterator
 	return Iterator[T]{iter: extended.SortingIterator(i.iter, keyFunc, true)}
 }
 
+func (i Iterator[T]) Reversed() Iterator[T] {
+	return Iterator[T]{iter: extended.ReversingIterator(i.iter)}
+}
+
 //func (i Iterator[TSrc]) MapIterator[TRes any](mappingFunc extended.MappingFunc[TSrc, TRes]) Iterator[TRes] {
 //	return &Iterator[TRes]{
 //		iter: extended.MappingIterator[TSrc, TRes](i.iter, mappingFunc),
