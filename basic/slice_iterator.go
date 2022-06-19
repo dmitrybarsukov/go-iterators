@@ -1,8 +1,8 @@
 package basic
 
 import (
-	"go-iterators"
-	"go-iterators/errors"
+	"iterator"
+	"iterator/errors"
 )
 
 type sliceIterator[T any] struct {
@@ -10,7 +10,7 @@ type sliceIterator[T any] struct {
 	currentIndex int
 }
 
-func Slice[T any](slice []T) go_iterators.Iter[T] {
+func Slice[T any](slice []T) iterator.Iter[T] {
 	return &sliceIterator[T]{slice: slice}
 }
 

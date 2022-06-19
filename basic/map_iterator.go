@@ -1,8 +1,8 @@
 package basic
 
 import (
-	"go-iterators"
-	"go-iterators/errors"
+	"iterator"
+	"iterator/errors"
 )
 
 type keyValue[TK comparable, TV any] struct {
@@ -20,7 +20,7 @@ type mapIterator[TK comparable, TV any] struct {
 	currentIndex int
 }
 
-func Map[TK comparable, TV any](mapp map[TK]TV) go_iterators.Iter[keyValue[TK, TV]] {
+func Map[TK comparable, TV any](mapp map[TK]TV) iterator.Iter[keyValue[TK, TV]] {
 	return &mapIterator[TK, TV]{mapp: mapp}
 }
 

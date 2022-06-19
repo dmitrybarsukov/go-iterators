@@ -3,7 +3,7 @@ package basic
 import (
 	"testing"
 
-	"go-iterators/errors"
+	"iterator/errors"
 
 	"github.com/stretchr/testify/assert"
 )
