@@ -3,7 +3,7 @@ package basic
 import (
 	"testing"
 
-	"iterator/errors"
+	"iterator/commons"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -46,7 +46,7 @@ func TestMapIteratorPanicsIfIteratorEnded(t *testing.T) {
 		return
 	}()
 
-	assert.Equal(t, errors.ErrIterEnded, err)
+	assert.Equal(t, commons.ErrIterEnded, err)
 }
 
 func TestMapIteratorNil(t *testing.T) {
