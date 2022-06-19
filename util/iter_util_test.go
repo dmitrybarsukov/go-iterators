@@ -86,3 +86,41 @@ func TestLastOrDefault(t *testing.T) {
 	value := LastOrDefault(basic.SliceIterator([]int{}), 5)
 	assert.Equal(t, 5, value)
 }
+
+func TestMaxBy(t *testing.T) {
+	_, ok := MaxBy(basic.SliceIterator([]int{}), Self[int])
+	assert.False(t, ok)
+
+	value, ok := MaxBy(basic.SliceIterator([]int{1, 3, 2}), Self[int])
+	assert.True(t, ok)
+	assert.Equal(t, 3, value)
+}
+
+func TestMaxByOrZeroValue(t *testing.T) {
+	value := MaxByOrZeroValue(basic.SliceIterator([]int{}), Self[int])
+	assert.Zero(t, value)
+}
+
+func TestMaxByOrDefault(t *testing.T) {
+	value := MaxByOrDefault(basic.SliceIterator([]int{}), Self[int], 8)
+	assert.Equal(t, 8, value)
+}
+
+func TestMinBy(t *testing.T) {
+	_, ok := MinBy(basic.SliceIterator([]int{}), Self[int])
+	assert.False(t, ok)
+
+	value, ok := MinBy(basic.SliceIterator([]int{1, 3, 2}), Self[int])
+	assert.True(t, ok)
+	assert.Equal(t, 1, value)
+}
+
+func TestMinByOrZeroValue(t *testing.T) {
+	value := MinByOrZeroValue(basic.SliceIterator([]int{}), Self[int])
+	assert.Zero(t, value)
+}
+
+func TestMinByOrDefault(t *testing.T) {
+	value := MinByOrDefault(basic.SliceIterator([]int{}), Self[int], 8)
+	assert.Equal(t, 8, value)
+}

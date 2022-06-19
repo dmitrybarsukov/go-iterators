@@ -2,6 +2,10 @@ package util
 
 import "iterator/commons"
 
+func Self[T any](i T) T {
+	return i
+}
+
 func ToSlice[T any](iter commons.Iter[T]) []T {
 	result := make([]T, 0)
 	for iter.HasNext() {
@@ -110,6 +114,64 @@ func LastOrZeroValue[T any](iter commons.Iter[T]) (result T) {
 
 func LastOrDefault[T any](iter commons.Iter[T], def T) T {
 	if item, ok := Last(iter); ok {
+		return item
+	}
+	return def
+}
+
+func MaxBy[TItem any, TKey commons.Ordered](iter commons.Iter[TItem], keyFunc func(TItem) TKey) (result TItem, ok bool) {
+	if !iter.HasNext() {
+		return
+	}
+	ok = true
+	result = iter.Next()
+	for iter.HasNext() {
+		value := iter.Next()
+		if keyFunc(value) > keyFunc(result) {
+			result = value
+		}
+	}
+	return
+}
+
+func MaxByOrZeroValue[TItem any, TKey commons.Ordered](iter commons.Iter[TItem], keyFunc func(TItem) TKey) (result TItem) {
+	if item, ok := MaxBy(iter, keyFunc); ok {
+		result = item
+	}
+	return
+}
+
+func MaxByOrDefault[TItem any, TKey commons.Ordered](iter commons.Iter[TItem], keyFunc func(TItem) TKey, def TItem) TItem {
+	if item, ok := MaxBy(iter, keyFunc); ok {
+		return item
+	}
+	return def
+}
+
+func MinBy[TItem any, TKey commons.Ordered](iter commons.Iter[TItem], keyFunc func(TItem) TKey) (result TItem, ok bool) {
+	if !iter.HasNext() {
+		return
+	}
+	ok = true
+	result = iter.Next()
+	for iter.HasNext() {
+		value := iter.Next()
+		if keyFunc(value) < keyFunc(result) {
+			result = value
+		}
+	}
+	return
+}
+
+func MinByOrZeroValue[TItem any, TKey commons.Ordered](iter commons.Iter[TItem], keyFunc func(TItem) TKey) (result TItem) {
+	if item, ok := MinBy(iter, keyFunc); ok {
+		result = item
+	}
+	return
+}
+
+func MinByOrDefault[TItem any, TKey commons.Ordered](iter commons.Iter[TItem], keyFunc func(TItem) TKey, def TItem) TItem {
+	if item, ok := MinBy(iter, keyFunc); ok {
 		return item
 	}
 	return def
