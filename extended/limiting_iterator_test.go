@@ -11,7 +11,7 @@ import (
 
 func TestLimitingIterator(t *testing.T) {
 	items := []int{1, 2, 3, 4}
-	iter := LimitingIterator(basic.Slice(items), 2)
+	iter := LimitingIterator(basic.SliceIterator(items), 2)
 	result := make([]int, 0)
 	for iter.HasNext() {
 		result = append(result, iter.Next())
@@ -21,7 +21,7 @@ func TestLimitingIterator(t *testing.T) {
 
 func TestLimitingIteratorUnlimited(t *testing.T) {
 	items := []int{1, 2, 3, 4}
-	iter := LimitingIterator(basic.Slice(items), 20)
+	iter := LimitingIterator(basic.SliceIterator(items), 20)
 	result := make([]int, 0)
 	for iter.HasNext() {
 		result = append(result, iter.Next())
@@ -31,7 +31,7 @@ func TestLimitingIteratorUnlimited(t *testing.T) {
 
 func TestLimitedIteratorPanicsIfIteratorEnded(t *testing.T) {
 	items := []int{1, 2}
-	iter := LimitingIterator(basic.Slice(items), 1)
+	iter := LimitingIterator(basic.SliceIterator(items), 1)
 	for iter.HasNext() {
 		_ = iter.Next()
 	}

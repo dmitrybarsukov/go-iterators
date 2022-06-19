@@ -4,52 +4,36 @@ import (
 	"testing"
 
 	"iterator/commons"
+	"iterator/util"
 
 	"github.com/stretchr/testify/assert"
 )
 
 func TestSliceIteratorEmpty(t *testing.T) {
 	items := make([]int, 0)
-	iter := Slice(items)
-	count := 0
-	for iter.HasNext() {
-		_ = iter.Next()
-		count += 1
-	}
-	assert.Equal(t, 0, count)
+	iter := SliceIterator(items)
+	assert.Zero(t, 0, util.Count(iter))
 }
 
 func TestSliceIteratorMany(t *testing.T) {
 	items := []int{1, 2, 5, 7, 0}
-	iter := Slice(items)
-	result := make([]int, 0)
-	for iter.HasNext() {
-		result = append(result, iter.Next())
-	}
-	assert.Equal(t, items, result)
+	iter := SliceIterator(items)
+	assert.Equal(t, items, util.ToSlice(iter))
 }
 
 func TestSliceIteratorPanicsIfIteratorEnded(t *testing.T) {
 	items := []int{1, 2}
-	iter := Slice(items)
+	iter := SliceIterator(items)
 	for iter.HasNext() {
 		_ = iter.Next()
 	}
-	err := func() (err error) {
-		defer func() {
-			if errRec, ok := recover().(error); ok {
-				err = errRec
-			}
-		}()
+	assert.PanicsWithValue(t, commons.ErrIterEnded, func() {
 		iter.Next()
-		return
-	}()
-
-	assert.Equal(t, commons.ErrIterEnded, err)
+	})
 }
 
 func TestSliceIteratorNil(t *testing.T) {
 	var items []int
-	iter := Slice(items)
+	iter := SliceIterator(items)
 	assert.False(t, iter.HasNext())
 }

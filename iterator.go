@@ -12,11 +12,11 @@ type Iterator[T any] struct {
 }
 
 func OfSlice[T any](slice []T) Iterator[T] {
-	return Iterator[T]{iter: basic.Slice(slice)}
+	return Iterator[T]{iter: basic.SliceIterator(slice)}
 }
 
-func OfMap[TK comparable, TV any](mapp map[TK]TV) Iterator[basic.KeyValue[TK, TV]] {
-	return Iterator[basic.KeyValue[TK, TV]]{iter: basic.Map(mapp)}
+func OfMap[TK comparable, TV any](mapp map[TK]TV) Iterator[commons.KeyValue[TK, TV]] {
+	return Iterator[commons.KeyValue[TK, TV]]{iter: basic.MapIterator(mapp)}
 }
 
 func (i Iterator[T]) HasNext() bool {
@@ -75,7 +75,7 @@ func (i Iterator[T]) Filter(predicate func(T) bool) Iterator[T] {
 	return Iterator[T]{iter: extended.FilteringIterator(i.iter, predicate)}
 }
 
-//func (i Iterator[TSrc]) Map[TRes any](mappingFunc extended.MappingFunc[TSrc, TRes]) Iterator[TRes] {
+//func (i Iterator[TSrc]) MapIterator[TRes any](mappingFunc extended.MappingFunc[TSrc, TRes]) Iterator[TRes] {
 //	return &Iterator[TRes]{
 //		iter: extended.MappingIterator[TSrc, TRes](i.iter, mappingFunc),
 //	}

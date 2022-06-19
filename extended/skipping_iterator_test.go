@@ -10,7 +10,7 @@ import (
 
 func TestSkippingIterator(t *testing.T) {
 	items := []int{1, 2, 3, 4}
-	iter := SkippingIterator(basic.Slice(items), 2)
+	iter := SkippingIterator(basic.SliceIterator(items), 2)
 	result := make([]int, 0)
 	for iter.HasNext() {
 		result = append(result, iter.Next())
@@ -20,7 +20,7 @@ func TestSkippingIterator(t *testing.T) {
 
 func TestSkippingIteratorSkipAll(t *testing.T) {
 	items := []int{1, 2, 3, 4}
-	iter := SkippingIterator(basic.Slice(items), 20)
+	iter := SkippingIterator(basic.SliceIterator(items), 20)
 	result := make([]int, 0)
 	for iter.HasNext() {
 		result = append(result, iter.Next())

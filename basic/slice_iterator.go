@@ -7,7 +7,7 @@ type sliceIterator[T any] struct {
 	currentIndex int
 }
 
-func Slice[T any](slice []T) commons.Iter[T] {
+func SliceIterator[T any](slice []T) commons.Iter[T] {
 	return &sliceIterator[T]{slice: slice}
 }
 

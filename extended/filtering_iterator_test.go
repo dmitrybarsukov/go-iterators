@@ -10,7 +10,7 @@ import (
 
 func TestFilteringIteratorNone(t *testing.T) {
 	items := []int{1, 2, 3, 4, 5}
-	iter := FilteringIterator(basic.Slice(items), func(i int) bool { return false })
+	iter := FilteringIterator(basic.SliceIterator(items), func(i int) bool { return false })
 	result := make([]int, 0)
 	for iter.HasNext() {
 		result = append(result, iter.Next())
@@ -20,7 +20,7 @@ func TestFilteringIteratorNone(t *testing.T) {
 
 func TestFilteringIteratorAll(t *testing.T) {
 	items := []int{1, 2, 3, 4, 5}
-	iter := FilteringIterator(basic.Slice(items), func(i int) bool { return true })
+	iter := FilteringIterator(basic.SliceIterator(items), func(i int) bool { return true })
 	result := make([]int, 0)
 	for iter.HasNext() {
 		result = append(result, iter.Next())
@@ -30,7 +30,7 @@ func TestFilteringIteratorAll(t *testing.T) {
 
 func TestFilteringIteratorSome(t *testing.T) {
 	items := []int{1, 2, 3, 4, 5}
-	iter := FilteringIterator(basic.Slice(items), func(i int) bool { return i%2 == 0 })
+	iter := FilteringIterator(basic.SliceIterator(items), func(i int) bool { return i%2 == 0 })
 	result := make([]int, 0)
 	for iter.HasNext() {
 		result = append(result, iter.Next())

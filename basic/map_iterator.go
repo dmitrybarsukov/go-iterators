@@ -2,22 +2,13 @@ package basic
 
 import "iterator/commons"
 
-type KeyValue[TK comparable, TV any] struct {
-	Key   TK
-	Value TV
-}
-
-func (v KeyValue[TK, TV]) Pair() (TK, TV) {
-	return v.Key, v.Value
-}
-
 type mapIterator[TK comparable, TV any] struct {
 	mapp         map[TK]TV
 	keys         []TK
 	currentIndex int
 }
 
-func Map[TK comparable, TV any](mapp map[TK]TV) commons.Iter[KeyValue[TK, TV]] {
+func MapIterator[TK comparable, TV any](mapp map[TK]TV) commons.Iter[commons.KeyValue[TK, TV]] {
 	return &mapIterator[TK, TV]{mapp: mapp}
 }
 
@@ -35,7 +26,7 @@ func (i *mapIterator[TK, TV]) HasNext() bool {
 	return i.currentIndex < len(i.keys)
 }
 
-func (i *mapIterator[TK, TV]) Next() KeyValue[TK, TV] {
+func (i *mapIterator[TK, TV]) Next() commons.KeyValue[TK, TV] {
 	i.checkKeysInitialized()
 	if i.currentIndex >= len(i.keys) {
 		panic(commons.ErrIterEnded)
@@ -43,5 +34,5 @@ func (i *mapIterator[TK, TV]) Next() KeyValue[TK, TV] {
 	i.currentIndex += 1
 	key := i.keys[i.currentIndex-1]
 	value := i.mapp[key]
-	return KeyValue[TK, TV]{key, value}
+	return commons.KeyValue[TK, TV]{key, value}
 }

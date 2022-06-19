@@ -4,13 +4,14 @@ import (
 	"testing"
 
 	"iterator/commons"
+	"iterator/util"
 
 	"github.com/stretchr/testify/assert"
 )
 
 func TestMapIteratorEmpty(t *testing.T) {
 	items := make(map[int]int)
-	iter := Map(items)
+	iter := MapIterator(items)
 	count := 0
 	for iter.HasNext() {
 		_ = iter.Next()
@@ -21,36 +22,24 @@ func TestMapIteratorEmpty(t *testing.T) {
 
 func TestMapIteratorMany(t *testing.T) {
 	items := map[int]string{1: "1", 2: "2", 3: "3"}
-	iter := Map(items)
-	result := make(map[int]string)
-	for iter.HasNext() {
-		key, value := iter.Next().Pair()
-		result[key] = value
-	}
+	iter := MapIterator(items)
+	result := util.ToMapKeyValue(iter)
 	assert.Equal(t, items, result)
 }
 
 func TestMapIteratorPanicsIfIteratorEnded(t *testing.T) {
 	items := map[int]string{1: "1", 2: "2", 3: "3"}
-	iter := Map(items)
+	iter := MapIterator(items)
 	for iter.HasNext() {
 		_ = iter.Next()
 	}
-	err := func() (err error) {
-		defer func() {
-			if errRec, ok := recover().(error); ok {
-				err = errRec
-			}
-		}()
+	assert.PanicsWithValue(t, commons.ErrIterEnded, func() {
 		iter.Next()
-		return
-	}()
-
-	assert.Equal(t, commons.ErrIterEnded, err)
+	})
 }
 
 func TestMapIteratorNil(t *testing.T) {
 	var items map[int]int
-	iter := Map(items)
+	iter := MapIterator(items)
 	assert.False(t, iter.HasNext())
 }

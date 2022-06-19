@@ -41,6 +41,15 @@ func ToMapWithValue[TItem any, TKey comparable, TValue any](
 	return result
 }
 
+func ToMapKeyValue[TKey comparable, TValue any](iter commons.Iter[commons.KeyValue[TKey, TValue]]) map[TKey]TValue {
+	result := make(map[TKey]TValue)
+	for iter.HasNext() {
+		key, value := iter.Next().Pair()
+		result[key] = value
+	}
+	return result
+}
+
 func Count[T any](iter commons.Iter[T]) int {
 	result := 0
 	for ; iter.HasNext(); result += 1 {
