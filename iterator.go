@@ -97,6 +97,10 @@ func (i Iterator[T]) Append(items ...T) Iterator[T] {
 	return Iterator[T]{iter: extended.AppendingIterator(i.iter, items...)}
 }
 
+func (i Iterator[T]) Prepend(items ...T) Iterator[T] {
+	return Iterator[T]{iter: extended.PrependingIterator(i.iter, items...)}
+}
+
 func (i Iterator[T]) ForEach(action func(T)) {
 	util.ForEach(i.iter, action)
 }
