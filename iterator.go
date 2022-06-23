@@ -1,5 +1,7 @@
 package iterator
 
+//go:generate go run generate/extensions.go
+
 import (
 	"iterator/basic"
 	"iterator/commons"
@@ -85,46 +87,6 @@ func (i Iterator[T]) Limit(count int) Iterator[T] {
 
 func (i Iterator[T]) Filter(predicate func(T) bool) Iterator[T] {
 	return Iterator[T]{iter: extended.FilteringIterator(i.iter, predicate)}
-}
-
-func (i Iterator[T]) SortedByInt(keyFunc func(T) int) Iterator[T] {
-	return Iterator[T]{iter: extended.SortingIterator(i.iter, keyFunc, false)}
-}
-
-func (i Iterator[T]) SortedByIntDescending(keyFunc func(T) int) Iterator[T] {
-	return Iterator[T]{iter: extended.SortingIterator(i.iter, keyFunc, true)}
-}
-
-func (i Iterator[T]) SortedByInt64(keyFunc func(T) int64) Iterator[T] {
-	return Iterator[T]{iter: extended.SortingIterator(i.iter, keyFunc, false)}
-}
-
-func (i Iterator[T]) SortedByInt64Descending(keyFunc func(T) int64) Iterator[T] {
-	return Iterator[T]{iter: extended.SortingIterator(i.iter, keyFunc, true)}
-}
-
-func (i Iterator[T]) SortedByString(keyFunc func(T) string) Iterator[T] {
-	return Iterator[T]{iter: extended.SortingIterator(i.iter, keyFunc, false)}
-}
-
-func (i Iterator[T]) SortedByStringDescending(keyFunc func(T) string) Iterator[T] {
-	return Iterator[T]{iter: extended.SortingIterator(i.iter, keyFunc, true)}
-}
-
-func (i Iterator[T]) SortedByFloat32(keyFunc func(T) float32) Iterator[T] {
-	return Iterator[T]{iter: extended.SortingIterator(i.iter, keyFunc, false)}
-}
-
-func (i Iterator[T]) SortedByFloat32Descending(keyFunc func(T) float32) Iterator[T] {
-	return Iterator[T]{iter: extended.SortingIterator(i.iter, keyFunc, true)}
-}
-
-func (i Iterator[T]) SortedByFloat64(keyFunc func(T) float64) Iterator[T] {
-	return Iterator[T]{iter: extended.SortingIterator(i.iter, keyFunc, false)}
-}
-
-func (i Iterator[T]) SortedByFloat64Descending(keyFunc func(T) float64) Iterator[T] {
-	return Iterator[T]{iter: extended.SortingIterator(i.iter, keyFunc, true)}
 }
 
 func (i Iterator[T]) Reversed() Iterator[T] {
