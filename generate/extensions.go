@@ -24,11 +24,11 @@ var orderedTypes = []string{
 var functionsToGenerate = []string{
 	`
 func (i Iterator[T]) SortedBy%[1]s(keyFunc func(T) %[2]s) Iterator[T] {
-	return Iterator[T]{iter: extended.SortingIterator(i.iter, keyFunc, false)}
+	return Iterator[T]{iter: extended.SortingIteratorAsc(i.iter, keyFunc)}
 }`,
 	`
 func (i Iterator[T]) SortedBy%[1]sDescending(keyFunc func(T) %[2]s) Iterator[T] {
-	return Iterator[T]{iter: extended.SortingIterator(i.iter, keyFunc, true)}
+	return Iterator[T]{iter: extended.SortingIteratorDesc(i.iter, keyFunc)}
 }`,
 	`
 func (i Iterator[T]) DistinctBy%[1]s(keyFunc func(T) %[2]s) Iterator[T] {
