@@ -13,6 +13,10 @@ type Iterator[T any] struct {
 	iter commons.Iter[T]
 }
 
+func Empty[T any]() Iterator[T] {
+	return Iterator[T]{iter: basic.SliceIterator[T](nil)}
+}
+
 func Slice[T any](slice []T) Iterator[T] {
 	return Iterator[T]{iter: basic.SliceIterator(slice)}
 }
