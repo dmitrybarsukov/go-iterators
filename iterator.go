@@ -93,6 +93,18 @@ func (i Iterator[T]) Reversed() Iterator[T] {
 	return Iterator[T]{iter: extended.ReversingIterator(i.iter)}
 }
 
+func (i Iterator[T]) ForEach(action func(T)) {
+	util.ForEach(i.iter, action)
+}
+
+func (i Iterator[T]) ForEachCollectingErrors(action func(T) error) []error {
+	return util.ForEachCollectingErrors(i.iter, action)
+}
+
+func (i Iterator[T]) ForEachUntilFirstError(action func(T) error) error {
+	return util.ForEachUntilFirstError(i.iter, action)
+}
+
 //func (i Iterator[TSrc]) MapIterator[TRes any](mappingFunc extended.MappingFunc[TSrc, TRes]) Iterator[TRes] {
 //	return &Iterator[TRes]{
 //		iter: extended.MappingIterator[TSrc, TRes](i.iter, mappingFunc),

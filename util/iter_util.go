@@ -176,3 +176,29 @@ func MinByOrDefault[TItem any, TKey commons.Ordered](iter commons.Iter[TItem], k
 	}
 	return def
 }
+
+func ForEach[TItem any](iter commons.Iter[TItem], action func(TItem)) {
+	for iter.HasNext() {
+		action(iter.Next())
+	}
+}
+
+func ForEachCollectingErrors[TItem any](iter commons.Iter[TItem], action func(TItem) error) (result []error) {
+	for iter.HasNext() {
+		err := action(iter.Next())
+		if err != nil {
+			result = append(result, err)
+		}
+	}
+	return
+}
+
+func ForEachUntilFirstError[TItem any](iter commons.Iter[TItem], action func(TItem) error) error {
+	for iter.HasNext() {
+		err := action(iter.Next())
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
