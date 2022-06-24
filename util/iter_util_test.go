@@ -1,6 +1,7 @@
 package util
 
 import (
+	"errors"
 	"testing"
 
 	"iterator/basic"
@@ -123,4 +124,33 @@ func TestMinByOrZeroValue(t *testing.T) {
 func TestMinByOrDefault(t *testing.T) {
 	value := MinByOrDefault(basic.SliceIterator([]int{}), Self[int], 8)
 	assert.Equal(t, 8, value)
+}
+
+func TestForEach(t *testing.T) {
+	items := []int{1, 2, 3}
+	var result []int
+	ForEach(basic.SliceIterator(items), func(i int) { result = append(result, i) })
+	assert.Equal(t, items, result)
+}
+
+func TestForEachCollectingErrors(t *testing.T) {
+	items := []string{"1", "2", "3"}
+	errs := ForEachCollectingErrors(basic.SliceIterator(items), func(i string) error {
+		return errors.New(i)
+	})
+	assert.Equal(t, []error{errors.New("1"), errors.New("2"), errors.New("3")}, errs)
+}
+
+func TestForEachUntilFirstError(t *testing.T) {
+	err := ForEachUntilFirstError(basic.SliceIterator([]int{1, 2, 3}), func(i int) error {
+		if i == 2 {
+			return errors.New("2")
+		} else {
+			return nil
+		}
+	})
+	assert.Equal(t, errors.New("2"), err)
+
+	err = ForEachUntilFirstError(basic.SliceIterator([]int{1, 2, 3}), func(i int) error { return nil })
+	assert.Equal(t, nil, err)
 }
