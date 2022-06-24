@@ -473,3 +473,55 @@ func (i Iterator[T]) MinByFloat64OrDefault(keyFunc func(T) float64, def T) T {
 func (i Iterator[T]) MinByStringOrDefault(keyFunc func(T) string, def T) T {
 	return util.MinByOrDefault(i.iter, keyFunc, def)
 }
+
+func (i Iterator[T]) SumByInt(keyFunc func(T) int) int {
+	return util.SumBy(i.iter, keyFunc)
+}
+
+func (i Iterator[T]) SumByInt8(keyFunc func(T) int8) int8 {
+	return util.SumBy(i.iter, keyFunc)
+}
+
+func (i Iterator[T]) SumByInt16(keyFunc func(T) int16) int16 {
+	return util.SumBy(i.iter, keyFunc)
+}
+
+func (i Iterator[T]) SumByInt32(keyFunc func(T) int32) int32 {
+	return util.SumBy(i.iter, keyFunc)
+}
+
+func (i Iterator[T]) SumByInt64(keyFunc func(T) int64) int64 {
+	return util.SumBy(i.iter, keyFunc)
+}
+
+func (i Iterator[T]) SumByUint(keyFunc func(T) uint) uint {
+	return util.SumBy(i.iter, keyFunc)
+}
+
+func (i Iterator[T]) SumByUint8(keyFunc func(T) uint8) uint8 {
+	return util.SumBy(i.iter, keyFunc)
+}
+
+func (i Iterator[T]) SumByUint16(keyFunc func(T) uint16) uint16 {
+	return util.SumBy(i.iter, keyFunc)
+}
+
+func (i Iterator[T]) SumByUint32(keyFunc func(T) uint32) uint32 {
+	return util.SumBy(i.iter, keyFunc)
+}
+
+func (i Iterator[T]) SumByUint64(keyFunc func(T) uint64) uint64 {
+	return util.SumBy(i.iter, keyFunc)
+}
+
+func (i Iterator[T]) SumByFloat32(keyFunc func(T) float32) float32 {
+	return util.SumBy(i.iter, keyFunc)
+}
+
+func (i Iterator[T]) SumByFloat64(keyFunc func(T) float64) float64 {
+	return util.SumBy(i.iter, keyFunc)
+}
+
+func (i Iterator[T]) SumByString(keyFunc func(T) string) string {
+	return util.SumBy(i.iter, keyFunc)
+}

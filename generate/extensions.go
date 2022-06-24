@@ -67,6 +67,11 @@ func (i Iterator[T]) MinBy%[1]sOrDefault(keyFunc func(T) %[2]s, def T) T {
 	return util.MinByOrDefault(i.iter, keyFunc, def)
 }
 `,
+	`
+func (i Iterator[T]) SumBy%[1]s(keyFunc func(T) %[2]s) %[2]s {
+	return util.SumBy(i.iter, keyFunc)
+}
+`,
 }
 
 func main() {

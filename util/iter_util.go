@@ -265,3 +265,10 @@ func None[T any](iter commons.Iter[T], predicate func(T) bool) bool {
 	}
 	return true
 }
+
+func SumBy[TItem any, TValue commons.Ordered](iter commons.Iter[TItem], valueFunc func(TItem) TValue) (sum TValue) {
+	ForEach(iter, func(item TItem) {
+		sum += valueFunc(item)
+	})
+	return sum
+}
