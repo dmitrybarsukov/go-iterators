@@ -34,44 +34,33 @@ func (i Iterator[T]) SortedBy%[1]sDescending(keyFunc func(T) %[2]s) Iterator[T] 
 	return Iterator[T]{iter: extended.SortingIteratorDesc(i.iter, keyFunc)}
 }`,
 	`
-func (i Iterator[T]) DistinctBy%[1]s(keyFunc func(T) %[2]s) Iterator[T] {
-	return Iterator[T]{iter: extended.DistinctingIterator(i.iter, keyFunc)}
-}`,
-	`
 func (i Iterator[T]) MaxBy%[1]s(keyFunc func(T) %[2]s) (T, bool) {
 	return util.MaxBy(i.iter, keyFunc)
-}
-`,
+}`,
 	`
 func (i Iterator[T]) MaxBy%[1]sOrZeroValue(keyFunc func(T) %[2]s) T {
 	return util.MaxByOrZeroValue(i.iter, keyFunc)
-}
-`,
+}`,
 	`
 func (i Iterator[T]) MaxBy%[1]sOrDefault(keyFunc func(T) %[2]s, def T) T {
 	return util.MaxByOrDefault(i.iter, keyFunc, def)
-}
-`,
+}`,
 	`
 func (i Iterator[T]) MinBy%[1]s(keyFunc func(T) %[2]s) (T, bool) {
 	return util.MinBy(i.iter, keyFunc)
-}
-`,
+}`,
 	`
 func (i Iterator[T]) MinBy%[1]sOrZeroValue(keyFunc func(T) %[2]s) T {
 	return util.MinByOrZeroValue(i.iter, keyFunc)
-}
-`,
+}`,
 	`
 func (i Iterator[T]) MinBy%[1]sOrDefault(keyFunc func(T) %[2]s, def T) T {
 	return util.MinByOrDefault(i.iter, keyFunc, def)
-}
-`,
+}`,
 	`
 func (i Iterator[T]) SumBy%[1]s(keyFunc func(T) %[2]s) %[2]s {
 	return util.SumBy(i.iter, keyFunc)
-}
-`,
+}`,
 }
 
 func main() {
@@ -88,7 +77,7 @@ func main() {
 	}
 	for _, template := range functionsToGenerate {
 		for _, typeName := range orderedTypes {
-			typeNameCap := strings.Title(typeName)
+			typeNameCap := strings.ToUpper(typeName[0:1]) + typeName[1:]
 			_, err = fmt.Fprintf(file, template+"\n", typeNameCap, typeName)
 		}
 	}

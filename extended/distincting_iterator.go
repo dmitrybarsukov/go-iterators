@@ -2,27 +2,27 @@ package extended
 
 import "iterator/commons"
 
-type distinctingIterator[TItem any, TKey comparable] struct {
-	innerIter  commons.Iter[TItem]
-	keyFunc    func(TItem) TKey
-	item       TItem
-	key        TKey
-	uniqueKeys map[TKey]struct{}
+type distinctingIterator[T any] struct {
+	innerIter  commons.Iter[T]
+	keyFunc    func(T) any
+	item       T
+	key        any
+	uniqueKeys map[any]struct{}
 	ended      bool
 }
 
-func DistinctingIterator[TItem any, TKey comparable](iter commons.Iter[TItem], keyFunc func(TItem) TKey) commons.Iter[TItem] {
+func DistinctingIterator[T any](iter commons.Iter[T], keyFunc func(T) any) commons.Iter[T] {
 	if keyFunc == nil {
 		panic(commons.ErrFuncIsNil)
 	}
-	return &distinctingIterator[TItem, TKey]{
+	return &distinctingIterator[T]{
 		innerIter:  iter,
 		keyFunc:    keyFunc,
-		uniqueKeys: make(map[TKey]struct{}),
+		uniqueKeys: make(map[any]struct{}),
 	}
 }
 
-func (i *distinctingIterator[TItem, TKey]) HasNext() bool {
+func (i *distinctingIterator[T]) HasNext() bool {
 	for i.innerIter.HasNext() {
 		i.item = i.innerIter.Next()
 		i.key = i.keyFunc(i.item)
@@ -34,7 +34,7 @@ func (i *distinctingIterator[TItem, TKey]) HasNext() bool {
 	return false
 }
 
-func (i *distinctingIterator[TItem, TKey]) Next() TItem {
+func (i *distinctingIterator[T]) Next() T {
 	if i.ended {
 		panic(commons.ErrIterEnded)
 	}

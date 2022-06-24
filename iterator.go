@@ -105,6 +105,10 @@ func (i Iterator[T]) Reversed() Iterator[T] {
 	return Iterator[T]{iter: extended.ReversingIterator(i.iter)}
 }
 
+func (i Iterator[T]) DistinctBy(keyFunc func(T) any) Iterator[T] {
+	return Iterator[T]{iter: extended.DistinctingIterator(i.iter, keyFunc)}
+}
+
 func (i Iterator[T]) Append(items ...T) Iterator[T] {
 	return Iterator[T]{iter: extended.AppendingIterator(i.iter, items...)}
 }
@@ -113,7 +117,7 @@ func (i Iterator[T]) Prepend(items ...T) Iterator[T] {
 	return Iterator[T]{iter: extended.PrependingIterator(i.iter, items...)}
 }
 
-func (i Iterator[T]) OnEach(iter commons.Iter[T], action func(T)) commons.Iter[T] {
+func (i Iterator[T]) OnEach(iter commons.Iter[T], action func(T)) Iterator[T] {
 	return Iterator[T]{iter: extended.ActionIterator(iter, action)}
 }
 

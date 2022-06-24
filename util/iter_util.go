@@ -6,6 +6,10 @@ func Self[T any](i T) T {
 	return i
 }
 
+func SelfAny[T any](i T) any {
+	return i
+}
+
 func ToSlice[T any](iter commons.Iter[T]) []T {
 	result := make([]T, 0)
 	for iter.HasNext() {
@@ -143,10 +147,13 @@ func MaxBy[TItem any, TKey commons.Ordered](iter commons.Iter[TItem], keyFunc fu
 	}
 	ok = true
 	result = iter.Next()
+	key := keyFunc(result)
 	for iter.HasNext() {
 		value := iter.Next()
-		if keyFunc(value) > keyFunc(result) {
+		newKey := keyFunc(value)
+		if newKey > key {
 			result = value
+			key = newKey
 		}
 	}
 	return
@@ -181,10 +188,13 @@ func MinBy[TItem any, TKey commons.Ordered](iter commons.Iter[TItem], keyFunc fu
 	}
 	ok = true
 	result = iter.Next()
+	key := keyFunc(result)
 	for iter.HasNext() {
 		value := iter.Next()
-		if keyFunc(value) < keyFunc(result) {
+		newKey := keyFunc(value)
+		if newKey < key {
 			result = value
+			key = newKey
 		}
 	}
 	return

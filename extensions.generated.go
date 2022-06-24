@@ -110,58 +110,6 @@ func (i Iterator[T]) SortedByStringDescending(keyFunc func(T) string) Iterator[T
 	return Iterator[T]{iter: extended.SortingIteratorDesc(i.iter, keyFunc)}
 }
 
-func (i Iterator[T]) DistinctByInt(keyFunc func(T) int) Iterator[T] {
-	return Iterator[T]{iter: extended.DistinctingIterator(i.iter, keyFunc)}
-}
-
-func (i Iterator[T]) DistinctByInt8(keyFunc func(T) int8) Iterator[T] {
-	return Iterator[T]{iter: extended.DistinctingIterator(i.iter, keyFunc)}
-}
-
-func (i Iterator[T]) DistinctByInt16(keyFunc func(T) int16) Iterator[T] {
-	return Iterator[T]{iter: extended.DistinctingIterator(i.iter, keyFunc)}
-}
-
-func (i Iterator[T]) DistinctByInt32(keyFunc func(T) int32) Iterator[T] {
-	return Iterator[T]{iter: extended.DistinctingIterator(i.iter, keyFunc)}
-}
-
-func (i Iterator[T]) DistinctByInt64(keyFunc func(T) int64) Iterator[T] {
-	return Iterator[T]{iter: extended.DistinctingIterator(i.iter, keyFunc)}
-}
-
-func (i Iterator[T]) DistinctByUint(keyFunc func(T) uint) Iterator[T] {
-	return Iterator[T]{iter: extended.DistinctingIterator(i.iter, keyFunc)}
-}
-
-func (i Iterator[T]) DistinctByUint8(keyFunc func(T) uint8) Iterator[T] {
-	return Iterator[T]{iter: extended.DistinctingIterator(i.iter, keyFunc)}
-}
-
-func (i Iterator[T]) DistinctByUint16(keyFunc func(T) uint16) Iterator[T] {
-	return Iterator[T]{iter: extended.DistinctingIterator(i.iter, keyFunc)}
-}
-
-func (i Iterator[T]) DistinctByUint32(keyFunc func(T) uint32) Iterator[T] {
-	return Iterator[T]{iter: extended.DistinctingIterator(i.iter, keyFunc)}
-}
-
-func (i Iterator[T]) DistinctByUint64(keyFunc func(T) uint64) Iterator[T] {
-	return Iterator[T]{iter: extended.DistinctingIterator(i.iter, keyFunc)}
-}
-
-func (i Iterator[T]) DistinctByFloat32(keyFunc func(T) float32) Iterator[T] {
-	return Iterator[T]{iter: extended.DistinctingIterator(i.iter, keyFunc)}
-}
-
-func (i Iterator[T]) DistinctByFloat64(keyFunc func(T) float64) Iterator[T] {
-	return Iterator[T]{iter: extended.DistinctingIterator(i.iter, keyFunc)}
-}
-
-func (i Iterator[T]) DistinctByString(keyFunc func(T) string) Iterator[T] {
-	return Iterator[T]{iter: extended.DistinctingIterator(i.iter, keyFunc)}
-}
-
 func (i Iterator[T]) MaxByInt(keyFunc func(T) int) (T, bool) {
 	return util.MaxBy(i.iter, keyFunc)
 }
