@@ -154,3 +154,43 @@ func TestForEachUntilFirstError(t *testing.T) {
 	err = ForEachUntilFirstError(basic.SliceIterator([]int{1, 2, 3}), func(i int) error { return nil })
 	assert.Equal(t, nil, err)
 }
+
+func TestAllAnyNone(t *testing.T) {
+	isEven := func(i int) bool { return i%2 == 0 }
+	testCases := []struct {
+		name         string
+		items        []int
+		expectedAll  bool
+		expectedAny  bool
+		expectedNone bool
+	}{
+		{
+			name:         "None is even",
+			items:        []int{1, 3, 5},
+			expectedAll:  false,
+			expectedAny:  false,
+			expectedNone: true,
+		},
+		{
+			name:         "Some is even",
+			items:        []int{1, 2, 3},
+			expectedAll:  false,
+			expectedAny:  true,
+			expectedNone: false,
+		},
+		{
+			name:         "All is even",
+			items:        []int{2, 4, 6},
+			expectedAll:  true,
+			expectedAny:  true,
+			expectedNone: false,
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			assert.Equal(t, tc.expectedAll, All(basic.SliceIterator(tc.items), isEven))
+			assert.Equal(t, tc.expectedAny, Any(basic.SliceIterator(tc.items), isEven))
+			assert.Equal(t, tc.expectedNone, None(basic.SliceIterator(tc.items), isEven))
+		})
+	}
+}

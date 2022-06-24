@@ -120,6 +120,9 @@ func LastOrDefault[T any](iter commons.Iter[T], def T) T {
 }
 
 func MaxBy[TItem any, TKey commons.Ordered](iter commons.Iter[TItem], keyFunc func(TItem) TKey) (result TItem, ok bool) {
+	if keyFunc == nil {
+		panic(commons.ErrFuncIsNil)
+	}
 	if !iter.HasNext() {
 		return
 	}
@@ -135,6 +138,9 @@ func MaxBy[TItem any, TKey commons.Ordered](iter commons.Iter[TItem], keyFunc fu
 }
 
 func MaxByOrZeroValue[TItem any, TKey commons.Ordered](iter commons.Iter[TItem], keyFunc func(TItem) TKey) (result TItem) {
+	if keyFunc == nil {
+		panic(commons.ErrFuncIsNil)
+	}
 	if item, ok := MaxBy(iter, keyFunc); ok {
 		result = item
 	}
@@ -142,6 +148,9 @@ func MaxByOrZeroValue[TItem any, TKey commons.Ordered](iter commons.Iter[TItem],
 }
 
 func MaxByOrDefault[TItem any, TKey commons.Ordered](iter commons.Iter[TItem], keyFunc func(TItem) TKey, def TItem) TItem {
+	if keyFunc == nil {
+		panic(commons.ErrFuncIsNil)
+	}
 	if item, ok := MaxBy(iter, keyFunc); ok {
 		return item
 	}
@@ -149,6 +158,9 @@ func MaxByOrDefault[TItem any, TKey commons.Ordered](iter commons.Iter[TItem], k
 }
 
 func MinBy[TItem any, TKey commons.Ordered](iter commons.Iter[TItem], keyFunc func(TItem) TKey) (result TItem, ok bool) {
+	if keyFunc == nil {
+		panic(commons.ErrFuncIsNil)
+	}
 	if !iter.HasNext() {
 		return
 	}
@@ -164,6 +176,9 @@ func MinBy[TItem any, TKey commons.Ordered](iter commons.Iter[TItem], keyFunc fu
 }
 
 func MinByOrZeroValue[TItem any, TKey commons.Ordered](iter commons.Iter[TItem], keyFunc func(TItem) TKey) (result TItem) {
+	if keyFunc == nil {
+		panic(commons.ErrFuncIsNil)
+	}
 	if item, ok := MinBy(iter, keyFunc); ok {
 		result = item
 	}
@@ -171,19 +186,28 @@ func MinByOrZeroValue[TItem any, TKey commons.Ordered](iter commons.Iter[TItem],
 }
 
 func MinByOrDefault[TItem any, TKey commons.Ordered](iter commons.Iter[TItem], keyFunc func(TItem) TKey, def TItem) TItem {
+	if keyFunc == nil {
+		panic(commons.ErrFuncIsNil)
+	}
 	if item, ok := MinBy(iter, keyFunc); ok {
 		return item
 	}
 	return def
 }
 
-func ForEach[TItem any](iter commons.Iter[TItem], action func(TItem)) {
+func ForEach[T any](iter commons.Iter[T], action func(T)) {
+	if action == nil {
+		panic(commons.ErrFuncIsNil)
+	}
 	for iter.HasNext() {
 		action(iter.Next())
 	}
 }
 
-func ForEachCollectingErrors[TItem any](iter commons.Iter[TItem], action func(TItem) error) (result []error) {
+func ForEachCollectingErrors[T any](iter commons.Iter[T], action func(T) error) (result []error) {
+	if action == nil {
+		panic(commons.ErrFuncIsNil)
+	}
 	for iter.HasNext() {
 		err := action(iter.Next())
 		if err != nil {
@@ -193,7 +217,10 @@ func ForEachCollectingErrors[TItem any](iter commons.Iter[TItem], action func(TI
 	return
 }
 
-func ForEachUntilFirstError[TItem any](iter commons.Iter[TItem], action func(TItem) error) error {
+func ForEachUntilFirstError[T any](iter commons.Iter[T], action func(T) error) error {
+	if action == nil {
+		panic(commons.ErrFuncIsNil)
+	}
 	for iter.HasNext() {
 		err := action(iter.Next())
 		if err != nil {
@@ -201,4 +228,40 @@ func ForEachUntilFirstError[TItem any](iter commons.Iter[TItem], action func(TIt
 		}
 	}
 	return nil
+}
+
+func All[T any](iter commons.Iter[T], predicate func(T) bool) bool {
+	if predicate == nil {
+		panic(commons.ErrFuncIsNil)
+	}
+	for iter.HasNext() {
+		if !predicate(iter.Next()) {
+			return false
+		}
+	}
+	return true
+}
+
+func Any[T any](iter commons.Iter[T], predicate func(T) bool) bool {
+	if predicate == nil {
+		panic(commons.ErrFuncIsNil)
+	}
+	for iter.HasNext() {
+		if predicate(iter.Next()) {
+			return true
+		}
+	}
+	return false
+}
+
+func None[T any](iter commons.Iter[T], predicate func(T) bool) bool {
+	if predicate == nil {
+		panic(commons.ErrFuncIsNil)
+	}
+	for iter.HasNext() {
+		if predicate(iter.Next()) {
+			return false
+		}
+	}
+	return true
 }

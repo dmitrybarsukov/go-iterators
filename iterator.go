@@ -121,6 +121,18 @@ func (i Iterator[T]) ForEachUntilFirstError(action func(T) error) error {
 	return util.ForEachUntilFirstError(i.iter, action)
 }
 
+func (i Iterator[T]) All(predicate func(T) bool) bool {
+	return util.All(i.iter, predicate)
+}
+
+func (i Iterator[T]) Any(predicate func(T) bool) bool {
+	return util.Any(i.iter, predicate)
+}
+
+func (i Iterator[T]) None(predicate func(T) bool) bool {
+	return util.None(i.iter, predicate)
+}
+
 //func (i Iterator[TSrc]) MapIterator[TRes any](mappingFunc extended.MappingFunc[TSrc, TRes]) Iterator[TRes] {
 //	return &Iterator[TRes]{
 //		iter: extended.MappingIterator[TSrc, TRes](i.iter, mappingFunc),
