@@ -25,16 +25,20 @@ func Map[TK comparable, TV any](mapp map[TK]TV) Iterator[commons.KeyValue[TK, TV
 	return Iterator[commons.KeyValue[TK, TV]]{iter: basic.MapIterator(mapp)}
 }
 
-func IntRange(startInclusive, endExclusive, step int) commons.Iter[int] {
+func IntRange(startInclusive, endExclusive, step int) Iterator[int] {
 	return Iterator[int]{iter: basic.IntRangeIterator(startInclusive, endExclusive, step)}
 }
 
-func Generator[T any](generateFunc func(int) T) commons.Iter[T] {
+func Generator[T any](generateFunc func(int) T) Iterator[T] {
 	return Iterator[T]{iter: basic.GeneratorIterator(generateFunc)}
 }
 
-func Repeat[T any](value T, count int) commons.Iter[T] {
+func Repeat[T any](value T, count int) Iterator[T] {
 	return Iterator[T]{iter: basic.RepeatIterator(value, count)}
+}
+
+func Chan[T any](channel chan T) Iterator[T] {
+	return Iterator[T]{iter: basic.ChanIterator(channel)}
 }
 
 func (i Iterator[T]) HasNext() bool {
