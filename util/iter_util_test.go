@@ -194,3 +194,41 @@ func TestAllAnyNone(t *testing.T) {
 		})
 	}
 }
+
+func TestWriteToChannel(t *testing.T) {
+	items := []int{1, 2, 3}
+	iter := basic.SliceIterator(items)
+	channel := make(chan int)
+	go func() {
+		WriteToChannel(iter, channel)
+		close(channel)
+	}()
+	var result []int
+	for i := range channel {
+		result = append(result, i)
+	}
+	assert.Equal(t, items, result)
+}
+
+func TestWriteToChannelAndClose(t *testing.T) {
+	items := []int{1, 2, 3}
+	iter := basic.SliceIterator(items)
+	channel := make(chan int)
+	go WriteToChannelAndClose(iter, channel)
+	var result []int
+	for i := range channel {
+		result = append(result, i)
+	}
+	assert.Equal(t, items, result)
+}
+
+func TestToReceiveChannel(t *testing.T) {
+	items := []int{1, 2, 3}
+	iter := basic.SliceIterator(items)
+	channel := ToReceiveChannel(iter)
+	var result []int
+	for i := range channel {
+		result = append(result, i)
+	}
+	assert.Equal(t, items, result)
+}

@@ -54,6 +54,21 @@ func ToMapKeyValue[TKey comparable, TValue any](iter commons.Iter[commons.KeyVal
 	return result
 }
 
+func ToReceiveChannel[T any](iter commons.Iter[T]) <-chan T {
+	channel := make(chan T)
+	go WriteToChannelAndClose(iter, channel)
+	return channel
+}
+
+func WriteToChannel[T any](iter commons.Iter[T], channel chan<- T) {
+	ForEach(iter, func(item T) { channel <- item })
+}
+
+func WriteToChannelAndClose[T any](iter commons.Iter[T], channel chan<- T) {
+	WriteToChannel(iter, channel)
+	close(channel)
+}
+
 func Count[T any](iter commons.Iter[T]) int {
 	result := 0
 	for ; iter.HasNext(); result += 1 {

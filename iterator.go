@@ -53,6 +53,10 @@ func (i Iterator[T]) ToSlice() []T {
 	return util.ToSlice(i.iter)
 }
 
+func (i Iterator[T]) ToReceiveChannel() <-chan T {
+	return util.ToReceiveChannel(i.iter)
+}
+
 func (i Iterator[T]) Count() int {
 	return util.Count(i.iter)
 }
@@ -135,6 +139,14 @@ func (i Iterator[T]) Any(predicate func(T) bool) bool {
 
 func (i Iterator[T]) None(predicate func(T) bool) bool {
 	return util.None(i.iter, predicate)
+}
+
+func (i Iterator[T]) WriteToChannel(channel chan T) {
+	util.WriteToChannel(i.iter, channel)
+}
+
+func (i Iterator[T]) WriteToChannelAndClose(channel chan T) {
+	util.WriteToChannelAndClose(i.iter, channel)
 }
 
 //func (i Iterator[TSrc]) MapIterator[TRes any](mappingFunc extended.MappingFunc[TSrc, TRes]) Iterator[TRes] {
