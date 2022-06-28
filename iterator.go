@@ -1,7 +1,5 @@
 package iterator
 
-//go:generate go run generate/extensions.go
-
 import (
 	"iterator/basic"
 	"iterator/commons"
@@ -117,8 +115,20 @@ func (i Iterator[T]) Prepend(items ...T) Iterator[T] {
 	return Iterator[T]{iter: extended.PrependingIterator(i.iter, items...)}
 }
 
-func (i Iterator[T]) OnEach(iter commons.Iter[T], action func(T)) Iterator[T] {
-	return Iterator[T]{iter: extended.ActionIterator(iter, action)}
+func (i Iterator[T]) OnEach(action func(T)) Iterator[T] {
+	return Iterator[T]{iter: extended.ActionIterator(i.iter, action)}
+}
+
+func (i Iterator[T]) SortedBy(keyFunc func(T) any) Iterator[T] {
+	return Iterator[T]{iter: extended.SortingIteratorAsc(i.iter, keyFunc)}
+}
+
+func (i Iterator[T]) SortedByDescending(keyFunc func(T) any) Iterator[T] {
+	return Iterator[T]{iter: extended.SortingIteratorDesc(i.iter, keyFunc)}
+}
+
+func (i Iterator[T]) SortedWith(compFunc func(T, T) bool) Iterator[T] {
+	return Iterator[T]{iter: extended.SortingIterator(i.iter, compFunc)}
 }
 
 func (i Iterator[T]) ForEach(action func(T)) {
