@@ -131,6 +131,10 @@ func (i Iterator[T]) SortedWith(compFunc func(T, T) bool) Iterator[T] {
 	return Iterator[T]{iter: extended.SortingIterator(i.iter, compFunc)}
 }
 
+func (i Iterator[T]) GroupBy(keyFunc func(T) any) Iterator[[]T] {
+	return Iterator[[]T]{iter: extended.GroupingIterator(i.iter, keyFunc)}
+}
+
 func (i Iterator[T]) ForEach(action func(T)) {
 	util.ForEach(i.iter, action)
 }
