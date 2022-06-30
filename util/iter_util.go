@@ -33,6 +33,21 @@ func ToMap[TItem any, TKey comparable](
 	return result
 }
 
+func ToMapMultiple[TItem any, TKey comparable](
+	iter commons.Iter[TItem],
+	keyMappingFunc func(TItem) TKey,
+) map[TKey][]TItem {
+	if keyMappingFunc == nil {
+		panic(commons.ErrFuncIsNil)
+	}
+	result := make(map[TKey][]TItem)
+	for iter.HasNext() {
+		item := iter.Next()
+		result[keyMappingFunc(item)] = append(result[keyMappingFunc(item)], item)
+	}
+	return result
+}
+
 func ToMapWithValue[TItem any, TKey comparable, TValue any](
 	iter commons.Iter[TItem],
 	keyMappingFunc func(TItem) TKey,

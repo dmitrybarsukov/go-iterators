@@ -23,6 +23,14 @@ func TestToMap(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
+func TestToMapMultiple(t *testing.T) {
+	items := []int{1, 2, 3, 4, 1, 2}
+	iter := basic.SliceIterator(items)
+	actual := ToMapMultiple(iter, func(i int) int { return i - 1 })
+	expected := map[int][]int{0: {1, 1}, 1: {2, 2}, 2: {3}, 3: {4}}
+	assert.Equal(t, expected, actual)
+}
+
 func TestToMapKeyValue(t *testing.T) {
 	items := map[int]int{1: 2, 2: 4, 4: 8}
 	iter := basic.MapIterator(items)
